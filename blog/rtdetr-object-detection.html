@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Understanding Real-Time Object Detection with RT-DETR | Sharavanan Mathivanan</title>
+  <meta name="description" content="A code deep dive into a Transformer-based object detection system built with RT-DETR, Python, OpenCV, and PyTorch." />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="../index.html#home" class="nav-logo">SHARKY<span class="logo-dot">.</span></a>
+      <div class="nav-links">
+        <a href="../index.html#home" class="nav-link">Home</a>
+        <a href="../index.html#about" class="nav-link">About</a>
+        <a href="../index.html#skills" class="nav-link">Skills</a>
+        <a href="../index.html#experience" class="nav-link">Experience</a>
+        <a href="../index.html#education" class="nav-link">Education</a>
+        <a href="../index.html#projects" class="nav-link">Projects</a>
+        <a href="../index.html#blog" class="nav-link active">Blog</a>
+        <a href="../index.html#contact" class="nav-link">Contact</a>
+      </div>
+      <div class="nav-cta">
+        <a href="../assets/Resumes/Sharavanan_Mathivanan_Resume.pdf" class="nav-btn nav-btn-primary" download>Resume</a>
+        <a href="https://www.linkedin.com/in/sharkyca" class="nav-btn nav-btn-secondary" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <a href="../index.html#blog" class="article-back-link">← Back to Blog</a>
+      <h1>Understanding Real-Time Object Detection with RT-DETR: A Code Deep Dive</h1>
+      <p class="page-hero-sub">A hands-on guide to building a Transformer-based object detection system.</p>
+      <div class="article-meta">
+        Aug 19, 2025 · 5 min read
+      </div>
+      <div class="article-tags">
+        <span class="proj-tag">Computer Vision</span>
+        <span class="proj-tag">Object Detection</span>
+        <span class="proj-tag">Python</span>
+        <span class="proj-tag">Transformers</span>
+        <span class="proj-tag">AI</span>
+      </div>
+      <button class="like-btn like-btn-hero" data-post-id="rtdetr-code-deep-dive" aria-pressed="false">
+        <span class="like-btn-icon">♡</span>
+        <span class="like-btn-count">–</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner article-wrap">
+      <article class="article-body">
+
+        <p>Object detection powers everything from smart cameras to autonomous robots. In this post I'll walk through the code behind my RT-DETR Object Detection System, a Python project using the RT-DETR model (<code>PekingU/rtdetr_r50vd</code>) for real-time and batch image processing.</p>
+
+        <p>Instead of just running the code, we'll dissect each script to understand how it works, from downloading the model to drawing bounding boxes. Let's explore the magic of computer vision with Python, OpenCV, and Transformers.</p>
+
+        <h2>What's This Project About?</h2>
+
+        <p>The RT-DETR Object Detection System uses a transformer-based model to detect objects in webcam feeds or image folders, annotating them with labeled bounding boxes. The project, built with Python, OpenCV, PyTorch, and the Transformers library, consists of three key scripts:</p>
+
+        <ul>
+          <li><code>local_save.py</code>: Downloads and saves the RT-DETR model.</li>
+          <li><code>main.py</code>: Orchestrates detection for webcam or image inputs.</li>
+          <li><code>utils.py</code>: Handles model loading and visualization.</li>
+        </ul>
+
+        <p>This walkthrough explains what each script does, line by line, to help you understand object detection under the hood.</p>
+
+        <p>Full code is on GitHub: <a href="https://github.com/DiamondDolby/rtdetr-object-detector" target="_blank" rel="noopener">DiamondDolby/rtdetr-object-detector</a></p>
+
+        <h3>Script 1: local_save.py — Fetching the RT-DETR Model</h3>
+
+        <p>The <code>local_save.py</code> script prepares the RT-DETR model for use by downloading it from the Hugging Face Transformers library and saving it locally.</p>
+
+        <pre><code>from transformers import AutoImageProcessor, AutoModelForObjectDetection
+
+# Pre-Trained RT-DETR model
+model_name = "PekingU/rtdetr_r50vd"
+
+# Local Folder
+save_path = "src/rtdetr_model"
+
+# Setting up image processor and neural network
+processor = AutoImageProcessor.from_pretrained(model_name)
+model = AutoModelForObjectDetection.from_pretrained(model_name)
+
+# Save to local folder
+processor.save_pretrained(save_path)
+model.save_pretrained(save_path)</code></pre>
+
+        <p><strong>What's happening?</strong></p>
+        <ul>
+          <li><strong>Imports:</strong> We use <code>AutoImageProcessor</code> and <code>AutoModelForObjectDetection</code> from the transformers library to handle image preprocessing and the RT-DETR model.</li>
+          <li><strong>Model name:</strong> <code>PekingU/rtdetr_r50vd</code> is the pre-trained RT-DETR model hosted on Hugging Face.</li>
+          <li><strong>Processor and model:</strong> the processor prepares images for the model (resizing, normalizing), while the model is the neural network for detection.</li>
+          <li><strong>Saving locally:</strong> <code>save_pretrained(save_path)</code> stores the model and processor in <code>src/rtdetr_model</code> for offline use, reducing dependency on internet access.</li>
+        </ul>
+
+        <p>This script ensures the model is ready before running detection tasks.</p>
+
+        <h3>Script 2: main.py — The Control Center</h3>
+
+        <p>The <code>main.py</code> script is the entry point, letting users choose between webcam or image folder modes and coordinating the detection process.</p>
+
+        <pre><code>import os
+import cv2
+import torch
+from utils import load_model, draw_boxes
+
+# Load model
+processor, model = load_model()
+model.eval()</code></pre>
+
+        <p>We use <code>cv2</code> (OpenCV) for image/video handling, <code>torch</code> for model inference, and custom <code>load_model</code> and <code>draw_boxes</code> from <code>utils.py</code>. <code>load_model()</code> retrieves the saved model and processor, and <code>model.eval()</code> sets the model to evaluation mode (disabling training-specific operations).</p>
+
+        <pre><code>def detect_from_webcam():
+    cap = cv2.VideoCapture(0)  # Change to 1 if using an external webcam
+    frame_count = 0
+
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        frame_count += 1
+        if frame_count % 3 != 0:  # change number to skip frames
+            continue  # Skip every 3 frames
+
+        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        inputs = processor(images=rgb, return_tensors="pt")
+
+        with torch.no_grad():
+            outputs = model(**inputs)
+
+        annotated = draw_boxes(frame, outputs, processor, model)
+        cv2.imshow("RT-DETR Live Feed", annotated)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()</code></pre>
+
+        <p>This is webcam mode (<code>detect_from_webcam</code>). Here's what's happening:</p>
+        <ul>
+          <li>Opens the default webcam (<code>cv2.VideoCapture(0)</code>).</li>
+          <li>Skips every third frame (<code>frame_count % 3</code>) for performance.</li>
+          <li>Converts frames to RGB (<code>cv2.cvtColor</code>), since RT-DETR expects RGB input.</li>
+          <li>Processes frames with the processor to create model inputs.</li>
+          <li>Runs inference (<code>model(**inputs)</code>) without gradient computation for efficiency.</li>
+          <li>Calls <code>draw_boxes</code> to annotate frames and displays them (<code>cv2.imshow</code>).</li>
+          <li>Exits on pressing <code>q</code>.</li>
+        </ul>
+
+        <pre><code>def detect_from_images():
+    input_folder = "images"
+    output_folder = "output"
+    os.makedirs(output_folder, exist_ok=True)
+
+    for filename in os.listdir(input_folder):
+        if filename.lower().endswith((".jpg", ".png", ".jpeg")):
+            path = os.path.join(input_folder, filename)
+            image = cv2.imread(path)
+            rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            inputs = processor(images=rgb, return_tensors="pt")
+
+            with torch.no_grad():
+                outputs = model(**inputs)
+
+            annotated = draw_boxes(image, outputs, processor, model)
+            cv2.imwrite(os.path.join(output_folder, filename), annotated)
+            print(f"Saved: {filename}")</code></pre>
+
+        <p>This is image mode (<code>detect_from_images</code>). It loops through images in the <code>images/</code> folder, reads and processes each one the same way as webcam mode, then saves annotated images to <code>output/</code> with <code>cv2.imwrite</code>.</p>
+
+        <pre><code>if __name__ == "__main__":
+    mode = input("Choose mode (1 = webcam, 2 = image folder): ")
+    if mode == "1":
+        detect_from_webcam()
+    elif mode == "2":
+        detect_from_images()
+    else:
+        print("Invalid mode.")</code></pre>
+
+        <p>This is the user interface: the <code>if __name__ == "__main__":</code> block prompts the user to choose a mode via input, making the pipeline user-friendly and versatile.</p>
+
+        <h3>Script 3: utils.py — The Helper Functions</h3>
+
+        <p>The <code>utils.py</code> script contains reusable functions for loading the model and visualizing detections.</p>
+
+        <pre><code>import cv2
+import torch
+from transformers import AutoImageProcessor, AutoModelForObjectDetection
+
+def load_model():
+    processor = AutoImageProcessor.from_pretrained("src/rtdetr_model")
+    model = AutoModelForObjectDetection.from_pretrained("src/rtdetr_model")
+    return processor, model</code></pre>
+
+        <p><code>load_model()</code> loads the saved processor and model from <code>src/rtdetr_model</code>, and returns both for use in <code>main.py</code>.</p>
+
+        <pre><code>def draw_boxes(image, outputs, processor, model, threshold=0.3):
+    target_sizes = [image.shape[:2][::-1]]  # (height, width) -> (width, height)
+    results = processor.post_process_object_detection(outputs, target_sizes=target_sizes, threshold=threshold)[0]
+    id2label = model.config.id2label
+
+    for score, label, box in zip(results["scores"], results["labels"], results["boxes"]):
+        box = [int(i) for i in box.tolist()]
+        cv2.rectangle(image, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), 2)
+        cv2.putText(image, f"{id2label[label.item()]}: {score:.2f}",
+                    (box[0], box[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
+    return image</code></pre>
+
+        <p><code>draw_boxes()</code> takes the input image, model outputs, processor, and model. It converts image dimensions to (width, height) for the processor, uses <code>processor.post_process_object_detection</code> to extract detections (boxes, scores, labels) at a confidence threshold of 0.3, maps label IDs to names via <code>model.config.id2label</code>, and draws green rectangles with labels and confidence scores on the image.</p>
+
+        <p>Keeping this logic in <code>utils.py</code> separates model loading and visualization from the main execution, so the codebase stays modular.</p>
+
+        <h2>Why This Matters</h2>
+
+        <p>The RT-DETR model leverages transformer architecture, using attention mechanisms to focus on relevant image regions, which makes it fast and accurate. Breaking down the code this way shows how it integrates with OpenCV for visualization and PyTorch for inference, a practical introduction to computer vision that applies whether you're processing real-time video or batch images with a state-of-the-art model.</p>
+
+        <h2>Try It Yourself</h2>
+
+        <p>The full project is open-source under the MIT License on GitHub: <a href="https://github.com/DiamondDolby/rtdetr-object-detector" target="_blank" rel="noopener">DiamondDolby/rtdetr-object-detector</a>.</p>
+
+        <p>To run it: install dependencies (<code>opencv-python</code>, <code>torch</code>, <code>transformers</code>), download the model with <code>local_save.py</code>, and execute <code>main.py</code>. Try experimenting with the confidence threshold, or add new features like video file support.</p>
+
+        <div class="article-footer">
+          <button class="like-btn" data-post-id="rtdetr-code-deep-dive" aria-pressed="false">
+            <span class="like-btn-icon">♡</span>
+            <span class="like-btn-count">–</span>
+          </button>
+          <a href="https://medium.com/@sharavanan.mathivanan/understanding-real-time-object-detection-with-rt-detr-a-code-deep-dive-03f8bb2daafe" target="_blank" rel="noopener" class="blog-card-read">Also on Medium →</a>
+        </div>
+
+      </article>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-name">Sharavanan Mathivanan</div>
+        <div class="footer-sub">London, Canada</div>
+        <div class="footer-visits" aria-label="Site visits">
+          <svg class="footer-eye-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3C4.5 3 1.5 5.5 0 8c1.5 2.5 4.5 5 8 5s6.5-2.5 8-5c-1.5-2.5-4.5-5-8-5zm0 8.5A3.5 3.5 0 1 1 8 4.5a3.5 3.5 0 0 1 0 7zm0-1.5A2 2 0 1 0 8 6a2 2 0 0 0 0 4z"/></svg>
+          <span id="visit-count">–</span>
+        </div>
+      </div>
+      <div class="footer-right">
+        <a href="https://github.com/Sharkyy-eng" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/sharkyca" class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-copy">© 2026 Sharavanan Mathivanan. All rights reserved.</div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

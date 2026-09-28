@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vision Mouse Advanced: Hands-Free Cursor Control with Blink Calibration | Sharavanan Mathivanan</title>
+  <meta name="description" content="A code walkthrough of an eye-tracking mouse controller with automatic blink threshold calibration, built with MediaPipe, OpenCV, and PyAutoGUI." />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="../index.html#home" class="nav-logo">SHARKY<span class="logo-dot">.</span></a>
+      <div class="nav-links">
+        <a href="../index.html#home" class="nav-link">Home</a>
+        <a href="../index.html#about" class="nav-link">About</a>
+        <a href="../index.html#skills" class="nav-link">Skills</a>
+        <a href="../index.html#experience" class="nav-link">Experience</a>
+        <a href="../index.html#education" class="nav-link">Education</a>
+        <a href="../index.html#projects" class="nav-link">Projects</a>
+        <a href="../index.html#blog" class="nav-link active">Blog</a>
+        <a href="../index.html#contact" class="nav-link">Contact</a>
+      </div>
+      <div class="nav-cta">
+        <a href="../assets/Resumes/Sharavanan_Mathivanan_Resume.pdf" class="nav-btn nav-btn-primary" download>Resume</a>
+        <a href="https://www.linkedin.com/in/sharkyca" class="nav-btn nav-btn-secondary" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <a href="../index.html#blog" class="article-back-link">← Back to Blog</a>
+      <h1>Vision Mouse Advanced: Hands-Free Cursor Control with Blink Calibration</h1>
+      <p class="page-hero-sub">A code walkthrough of an eye-tracking mouse controller that calibrates itself to your blink.</p>
+      <div class="article-meta">
+        Sept 24, 2025 · 4 min read
+      </div>
+      <div class="article-tags">
+        <span class="proj-tag">Computer Vision</span>
+        <span class="proj-tag">MediaPipe</span>
+        <span class="proj-tag">Python</span>
+        <span class="proj-tag">OpenCV</span>
+      </div>
+      <button class="like-btn like-btn-hero" data-post-id="vision-mouse-advanced" aria-pressed="false">
+        <span class="like-btn-icon">♡</span>
+        <span class="like-btn-count">–</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner article-wrap">
+      <article class="article-body">
+
+        <p>The original Vision Mouse used a fixed threshold to detect blinks, which worked fine for me, but broke the moment anyone else with different eye shape or lighting tried it. Vision Mouse Advanced fixes that with a short calibration phase that learns <em>your</em> blink before the cursor ever starts moving. Here's how the code actually works, from facial landmarks to click.</p>
+
+        <h2>What Changed From V1</h2>
+
+        <ul>
+          <li>🧠 Smart calibration, detects your personal blink threshold instead of using a hardcoded one.</li>
+          <li>🖱️ Smoother real-time cursor control using eye landmark interpolation.</li>
+          <li>👁️ Click with a natural blink, no hardware, no keyboard shortcuts.</li>
+          <li>📷 Live webcam feedback showing tracked landmarks while it runs.</li>
+        </ul>
+
+        <p>The stack is Python, OpenCV for the video loop, MediaPipe's Face Mesh for landmark detection, and PyAutoGUI to actually move the OS cursor and click.</p>
+
+        <h2>Setting Up Face Tracking</h2>
+
+        <p>MediaPipe's Face Mesh does the heavy lifting: point a webcam at a face and it returns hundreds of normalized landmark coordinates every frame, no training required.</p>
+
+        <pre><code>cam = cv2.VideoCapture(0)
+face_mesh = mp.solutions.face_mesh.FaceMesh(refine_landmarks=True)
+screen_w, screen_h = pyautogui.size()</code></pre>
+
+        <p><code>refine_landmarks=True</code> is the important flag here, it turns on MediaPipe's iris refinement, which is what gives access to the extra eye/iris landmarks (indices 474–478) used later for cursor tracking. Without it, eye tracking would be far less precise.</p>
+
+        <h2>Measuring an Eye Blink</h2>
+
+        <p>A blink is detected by measuring the vertical distance between two landmarks on the left eye, top lid and bottom lid. When the eye is open, that gap is relatively large; when it closes, the gap shrinks toward zero.</p>
+
+        <pre><code>def get_eye_diff(landmarks, frame_h):
+    left = [landmarks[145], landmarks[159]]
+    return abs(left[0].y - left[1].y)</code></pre>
+
+        <p>Landmarks 145 and 159 are two fixed points on the left eyelid in MediaPipe's face mesh topology. This function is reused in both the calibration phase and the main loop, it's the single source of truth for "how open is the eye right now."</p>
+
+        <h2>The Calibration Phase</h2>
+
+        <p>Instead of guessing a blink threshold, the program asks the user to blink five times and records the eye-diff value at each one:</p>
+
+        <pre><code>blink_diffs = []
+required_blinks = 5
+
+while len(blink_diffs) < required_blinks:
+    _, frame = cam.read()
+    frame = cv2.flip(frame, 1)
+    rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    output = face_mesh.process(rgb_frame)
+
+    if output.multi_face_landmarks:
+        landmarks = output.multi_face_landmarks[0].landmark
+        diff = get_eye_diff(landmarks, frame_h)
+
+        if diff < 0.014:
+            blink_diffs.append(diff)
+            print(f"Blink {len(blink_diffs)} recorded.")
+            time.sleep(1)  # wait for eye to open again
+
+# ...
+blink_threshold = np.mean(blink_diffs) + 0.002</code></pre>
+
+        <p>0.014 is a conservative starting cutoff, low enough that it only fires on an actual full blink, not just a squint. Once five samples are collected, the personal threshold is set slightly above their average (<code>+0.002</code>), which gives a small buffer so tiny natural fluctuations in eye-diff don't accidentally register as a blink once the real tracking starts. This one calibration step is what makes the system work across different people instead of just the one it was tuned on.</p>
+
+        <h2>Moving the Cursor</h2>
+
+        <p>Once calibrated, the main loop reads iris landmarks and maps their position directly onto the screen:</p>
+
+        <pre><code>for id, landmark in enumerate(landmarks[474:478]):
+    x = int(landmark.x * frame_w)
+    y = int(landmark.y * frame_h)
+    if id == 1:
+        norm_x = np.clip(landmark.x, 0.1, 0.9)
+        norm_y = np.clip(landmark.y, 0.1, 0.9)
+        screen_x = np.interp(norm_x, [0.1, 0.9], [0, screen_w])
+        screen_y = np.interp(norm_y, [0.1, 0.9], [0, screen_h])
+        pyautogui.moveTo(screen_x, screen_y)</code></pre>
+
+        <p>Landmarks 474–478 are the refined iris points unlocked earlier by <code>refine_landmarks=True</code>. The clip to <code>[0.1, 0.9]</code> before interpolating is a deliberate choice: MediaPipe's normalized coordinates run 0 to 1 across the frame, but the outer 10% on each edge is where iris tracking gets noisiest (people rarely look at the extreme corners of a webcam anyway). Clipping that range and then interpolating to the full screen width/height means small, controlled eye movements map to the whole screen instead of just the usable center of the frame.</p>
+
+        <h2>Clicking With a Blink</h2>
+
+        <p>Detecting the click itself reuses <code>get_eye_diff</code> from calibration, now compared against the personalized threshold, with a simple state flag to stop it from firing repeatedly while the eye stays shut:</p>
+
+        <pre><code>if diff < blink_threshold and not blinked:
+    blinked = True
+    pyautogui.click()
+    print("Blink")
+    time.sleep(0.3)
+elif diff >= blink_threshold:
+    blinked = False</code></pre>
+
+        <p>The <code>blinked</code> flag is what turns a blink into a single discrete click instead of a rapid-fire burst of clicks for every frame the eye happens to be below threshold. It only resets once the eye reopens (<code>diff >= blink_threshold</code>), so one physical blink reliably produces exactly one click.</p>
+
+        <h2>Why the Calibration Step Matters</h2>
+
+        <p>The lazy version of this project would hardcode a single blink threshold and call it done, and it would work great in a demo and fail for basically everyone else. Baking in a five-second calibration step is a small amount of extra code for a much more robust result: the system adapts to each user's actual eye shape, camera angle, and lighting instead of assuming everyone blinks identically.</p>
+
+        <h2>Try It Yourself</h2>
+
+        <p>Full code is open-source under the MIT License on GitHub: <a href="https://github.com/Sharkyy-eng/vision-mouse-advanced" target="_blank" rel="noopener">Sharkyy-eng/vision-mouse-advanced</a>.</p>
+
+        <p>Run <code>python main.py</code>, blink five times when prompted to calibrate, then control the cursor with your gaze and click with a blink. A well-lit room and a steady face during calibration make a noticeable difference in tracking quality.</p>
+
+        <div class="article-footer">
+          <button class="like-btn" data-post-id="vision-mouse-advanced" aria-pressed="false">
+            <span class="like-btn-icon">♡</span>
+            <span class="like-btn-count">–</span>
+          </button>
+        </div>
+
+      </article>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-name">Sharavanan Mathivanan</div>
+        <div class="footer-sub">London, Canada</div>
+        <div class="footer-visits" aria-label="Site visits">
+          <svg class="footer-eye-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3C4.5 3 1.5 5.5 0 8c1.5 2.5 4.5 5 8 5s6.5-2.5 8-5c-1.5-2.5-4.5-5-8-5zm0 8.5A3.5 3.5 0 1 1 8 4.5a3.5 3.5 0 0 1 0 7zm0-1.5A2 2 0 1 0 8 6a2 2 0 0 0 0 4z"/></svg>
+          <span id="visit-count">–</span>
+        </div>
+      </div>
+      <div class="footer-right">
+        <a href="https://github.com/Sharkyy-eng" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/sharkyca" class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-copy">© 2026 Sharavanan Mathivanan. All rights reserved.</div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building a Particle Filter for Robot Localization | Sharavanan Mathivanan</title>
+  <meta name="description" content="A code walkthrough of a 2D particle filter robot localization simulator built with Python, NumPy, and OpenCV." />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="../index.html#home" class="nav-logo">SHARKY<span class="logo-dot">.</span></a>
+      <div class="nav-links">
+        <a href="../index.html#home" class="nav-link">Home</a>
+        <a href="../index.html#about" class="nav-link">About</a>
+        <a href="../index.html#skills" class="nav-link">Skills</a>
+        <a href="../index.html#experience" class="nav-link">Experience</a>
+        <a href="../index.html#education" class="nav-link">Education</a>
+        <a href="../index.html#projects" class="nav-link">Projects</a>
+        <a href="../index.html#blog" class="nav-link active">Blog</a>
+        <a href="../index.html#contact" class="nav-link">Contact</a>
+      </div>
+      <div class="nav-cta">
+        <a href="../assets/Resumes/Sharavanan_Mathivanan_Resume.pdf" class="nav-btn nav-btn-primary" download>Resume</a>
+        <a href="https://www.linkedin.com/in/sharkyca" class="nav-btn nav-btn-secondary" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <a href="../index.html#blog" class="article-back-link">← Back to Blog</a>
+      <h1>Building a Particle Filter for Robot Localization</h1>
+      <p class="page-hero-sub">A code walkthrough of a 2D probabilistic localization simulator built with Python, NumPy, and OpenCV.</p>
+      <div class="article-meta">
+        Oct 2, 2025 · 5 min read
+      </div>
+      <div class="article-tags">
+        <span class="proj-tag">Robotics</span>
+        <span class="proj-tag">Particle Filter</span>
+        <span class="proj-tag">Python</span>
+        <span class="proj-tag">NumPy</span>
+        <span class="proj-tag">Probabilistic Robotics</span>
+      </div>
+      <button class="like-btn like-btn-hero" data-post-id="particle-filter-localization" aria-pressed="false">
+        <span class="like-btn-icon">♡</span>
+        <span class="like-btn-count">–</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner article-wrap">
+      <article class="article-body">
+
+        <p>One of the classic problems in mobile robotics is: if a robot only has noisy sensors and noisy motion, how does it figure out where it actually is? This project is a 2D simulator I built to answer that question hands-on, using a <strong>particle filter</strong> (a form of Monte Carlo localization) to estimate a robot's position on a grayscale map as it moves around blind, guided only by imperfect readings.</p>
+
+        <p>The whole thing runs in Python with NumPy doing the heavy lifting on the particle math and OpenCV handling the map rendering and keyboard input. Let's break down how it actually works.</p>
+
+        <h2>The Idea</h2>
+
+        <p>Instead of tracking one single position estimate, a particle filter tracks thousands of "guesses" at once, each one a hypothesis of where the robot could be. Every time the robot moves, all the particles move with it (with some noise). Every time the robot takes a sensor reading, particles that would have produced a similar reading get weighted higher, and particles that don't match get weighted lower. Resampling then keeps the good guesses and discards the bad ones, so over time the particle cloud collapses around the robot's true position.</p>
+
+        <h2>Setting Up the Map and Robot State</h2>
+
+        <p>The map is just a grayscale image, loaded once and blurred slightly so brightness changes smoothly across the terrain, that smoothing matters later for how the sensor model works.</p>
+
+        <pre><code>map_img = cv2.imread("map.png", cv2.IMREAD_GRAYSCALE)
+if map_img is None:
+    raise FileNotFoundError("Could not read map.png")
+HEIGHT, WIDTH = map_img.shape
+
+map_blur = cv2.GaussianBlur(map_img, (7, 7), 0)
+
+# Robot pose (floats)
+rx, ry, rtheta = (WIDTH / 4.0, HEIGHT / 4.0, 0.0)
+
+STEP = 5.0
+TURN = np.radians(25.0)
+SIGMA_STEP = 0.5
+SIGMA_TURN = np.radians(5.0)
+NUM_PARTICLES = 3000</code></pre>
+
+        <p>The robot's pose is just three floats: x, y, and heading angle theta. 3,000 particles are simulated per frame, each with its own (x, y, theta), which is plenty for smooth convergence without tanking frame rate.</p>
+
+        <h2>Motion With Noise</h2>
+
+        <p>Real robots never move exactly as commanded, wheels slip, motors aren't perfectly calibrated. That imperfection is simulated directly by adding Gaussian noise to every move:</p>
+
+        <pre><code>def move_robot(rx, ry, rtheta, fwd, turn):
+    fwd_noisy = fwd + float(np.random.normal(0.0, SIGMA_STEP))
+    turn_noisy = turn + float(np.random.normal(0.0, SIGMA_TURN))
+
+    rx += fwd_noisy * np.cos(rtheta)
+    ry += fwd_noisy * np.sin(rtheta)
+    rtheta += turn_noisy
+
+    rx = np.clip(rx, 0.0, WIDTH - 1)
+    ry = np.clip(ry, 0.0, HEIGHT - 1)
+    return rx, ry, rtheta</code></pre>
+
+        <p>The particles get the same treatment, but vectorized across all 3,000 at once instead of one at a time, which is where NumPy earns its keep:</p>
+
+        <pre><code>def move_particles(particles, fwd, turn):
+    if fwd == 0.0 and turn == 0.0:
+        return particles
+    particles[:, 0] += fwd * np.cos(particles[:, 2])
+    particles[:, 1] += fwd * np.sin(particles[:, 2])
+    particles[:, 2] += turn
+    particles[:, 0] = np.clip(particles[:, 0], 0.0, WIDTH - 1)
+    particles[:, 1] = np.clip(particles[:, 1], 0.0, HEIGHT - 1)
+    return particles</code></pre>
+
+        <h2>The Sensor Model</h2>
+
+        <p>The robot's only "sensor" is the brightness of the map at its current location, read off the blurred grayscale image, with noise added on top to simulate a real sensor's imprecision:</p>
+
+        <pre><code>def sense(x, y, noisy=False):
+    SIGMA_SENSOR = 5.0
+    xi = int(np.clip(x, 0, WIDTH - 1))
+    yi = int(np.clip(y, 0, HEIGHT - 1))
+    reading = float(map_blur[yi, xi])
+    if noisy:
+        reading += float(np.random.normal(0.0, SIGMA_SENSOR))
+    return reading</code></pre>
+
+        <p>It's a simple model on purpose, brightness as a stand-in for whatever a real sensor might return (distance, signal strength, whatever). The blur applied to the map earlier is what makes this readable: without it, brightness would jump too sharply between neighboring pixels for the filter to converge smoothly.</p>
+
+        <h2>Scoring the Particles</h2>
+
+        <p>This is the core of the filter: for every particle, compare what it <em>would have</em> sensed against what the robot <em>actually</em> sensed. Particles that match closely get high weight, particles that don't get pushed toward zero.</p>
+
+        <pre><code>def compute_weights(particles, robot_sensor):
+    xs = particles[:, 0].astype(np.int32)
+    ys = particles[:, 1].astype(np.int32)
+    particle_vals = map_blur[ys, xs].astype(np.float32)
+
+    errors = np.abs(robot_sensor - particle_vals)
+    max_err = errors.max()
+    weights = np.ones_like(errors) if max_err == 0 else (max_err - errors)
+
+    # Kill off particles that drifted off the map
+    edge_mask = (
+        (particles[:, 0] <= 0) | (particles[:, 0] >= WIDTH - 1) |
+        (particles[:, 1] <= 0) | (particles[:, 1] >= HEIGHT - 1)
+    )
+    weights[edge_mask] = 0.0
+
+    # Sharpen the distribution so good matches dominate
+    weights = weights ** 3
+
+    if np.sum(weights) == 0:
+        weights[:] = 1.0
+    return weights</code></pre>
+
+        <p>Two details worth calling out: particles that have drifted off the edge of the map get their weight zeroed out immediately (they're not physically valid guesses), and the raw weights get cubed before use. Cubing sharpens the distribution, small differences in error become much larger differences in weight, which makes the filter converge faster instead of staying spread out indefinitely.</p>
+
+        <h2>Resampling and Jitter</h2>
+
+        <p>Once every particle has a weight, the filter resamples: it draws a new set of 3,000 particles from the old set, with particles more likely to be picked the higher their weight. This is what actually collapses the cloud toward the true position over time.</p>
+
+        <pre><code>def resample(particles, weights):
+    probabilities = weights / np.sum(weights)
+    idx = np.random.choice(NUM_PARTICLES, size=NUM_PARTICLES, p=probabilities)
+    return particles[idx, :]</code></pre>
+
+        <p>Left alone, resampling alone would eventually collapse every particle onto a single duplicated point, losing the ability to recover if that point turns out wrong. A small amount of noise gets added back in afterward to keep the particle cloud diverse enough to adapt:</p>
+
+        <pre><code>def add_noise(particles):
+    SIGMA_PARTICLE_STEP = 2.0
+    SIGMA_PARTICLE_TURN = np.pi / 24.0
+    particles[:, 0] += np.random.normal(0, SIGMA_PARTICLE_STEP, NUM_PARTICLES)
+    particles[:, 1] += np.random.normal(0, SIGMA_PARTICLE_STEP, NUM_PARTICLES)
+    particles[:, 2] += np.random.normal(0, SIGMA_PARTICLE_TURN, NUM_PARTICLES)
+    particles[:, 0] = np.clip(particles[:, 0], 0.0, WIDTH - 1)
+    particles[:, 1] = np.clip(particles[:, 1], 0.0, HEIGHT - 1)
+    return particles</code></pre>
+
+        <h2>Tying It Together</h2>
+
+        <p>The main loop is straightforward once the pieces above exist: move the robot, propagate the particles the same way, and only run the sense → weigh → resample → jitter cycle when the robot actually moved forward (a pure turn doesn't give the sensor anything new to check against).</p>
+
+        <pre><code>if fwd != 0.0:
+    robot_sensor = sense(rx, ry, noisy=True)
+    weights = compute_weights(particles, robot_sensor)
+    particles = resample(particles, weights)
+    particles = add_noise(particles)</code></pre>
+
+        <p>On screen, the true robot position is drawn in green, the filter's best guess (the mean of all particles) in red, and the individual particles themselves in blue when toggled on with <code>P</code>. Watching the blue cloud shrink and chase the green dot around the map is honestly the most satisfying part of the whole project.</p>
+
+        <h2>Why This Matters</h2>
+
+        <p>Particle filters show up constantly in real robotics, GPS-denied indoor navigation, SLAM front-ends, sensor fusion pipelines. Building one from scratch, even in a toy 2D simulator, makes the tradeoffs concrete in a way that just reading the theory doesn't: how much noise to inject, how aggressively to sharpen the weight distribution, when resampling helps versus when it collapses diversity too fast.</p>
+
+        <h2>Try It Yourself</h2>
+
+        <p>Full code is open-source under the MIT License on GitHub: <a href="https://github.com/Sharkyy-eng/robot-localization-sim" target="_blank" rel="noopener">Sharkyy-eng/robot-localization-sim</a>.</p>
+
+        <p>Controls: arrow keys or <code>W/A/D</code> to drive, <code>P</code> to toggle the particle cloud visualization, <code>Q</code> or <code>Esc</code> to quit. Try swapping in your own map image, or tune <code>NUM_PARTICLES</code> and the sigma values to see how convergence speed changes.</p>
+
+        <div class="article-footer">
+          <button class="like-btn" data-post-id="particle-filter-localization" aria-pressed="false">
+            <span class="like-btn-icon">♡</span>
+            <span class="like-btn-count">–</span>
+          </button>
+        </div>
+
+      </article>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-name">Sharavanan Mathivanan</div>
+        <div class="footer-sub">London, Canada</div>
+        <div class="footer-visits" aria-label="Site visits">
+          <svg class="footer-eye-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3C4.5 3 1.5 5.5 0 8c1.5 2.5 4.5 5 8 5s6.5-2.5 8-5c-1.5-2.5-4.5-5-8-5zm0 8.5A3.5 3.5 0 1 1 8 4.5a3.5 3.5 0 0 1 0 7zm0-1.5A2 2 0 1 0 8 6a2 2 0 0 0 0 4z"/></svg>
+          <span id="visit-count">–</span>
+        </div>
+      </div>
+      <div class="footer-right">
+        <a href="https://github.com/Sharkyy-eng" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/sharkyca" class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-copy">© 2026 Sharavanan Mathivanan. All rights reserved.</div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

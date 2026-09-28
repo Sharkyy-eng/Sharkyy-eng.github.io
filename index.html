@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sharavanan Mathivanan | Mechatronics &amp; AI Engineer</title>
-  <meta name="description" content="Portfolio of Sharavanan Mathivanan — Mechatronics &amp; AI Systems Engineering student at Western University." />
+  <meta name="description" content="Portfolio of Sharavanan Mathivanan, Mechatronics &amp; AI Systems Engineering student at Western University." />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/animations.css">
@@ -13,16 +13,25 @@
 
   <nav id="main-nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">SHARKY<span class="logo-dot">.</span></a>
+      <a href="#home" class="nav-logo">SHARKY<span class="logo-dot">.</span></a>
       <div class="nav-links">
-        <a href="index.html" class="nav-link active">Home</a>
-        <a href="about.html" class="nav-link">About</a>
-        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="#home" class="nav-link" data-section="home">Home</a>
+        <a href="#about" class="nav-link" data-section="about">About</a>
+        <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+        <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+        <a href="#education" class="nav-link" data-section="education">Education</a>
+        <a href="#projects" class="nav-link" data-section="projects">Projects</a>
+        <a href="#blog" class="nav-link" data-section="blog">Blog</a>
+        <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+      </div>
+      <div class="nav-cta">
+        <a href="assets/Resumes/Sharavanan_Mathivanan_Resume.pdf" class="nav-btn nav-btn-primary" download>Resume</a>
+        <a href="https://www.linkedin.com/in/sharkyca" class="nav-btn nav-btn-secondary" target="_blank" rel="noopener">LinkedIn</a>
       </div>
     </div>
   </nav>
 
-  <section class="hero">
+  <section class="hero" id="home">
     <canvas id="hero-canvas"></canvas>
     <div class="hero-inner">
       <div class="hero-left">
@@ -36,9 +45,23 @@
         </h1>
         <p class="hero-typewriter"><span id="typewriter"></span><span class="tw-cursor">|</span></p>
         <p class="hero-sub">Building intelligent machines that bridge hardware and software.</p>
+        <div class="current-status">
+          <div class="status-pill">
+            <span class="status-pill-icon">💼</span>
+            Payload Lead @ Western Aero Design
+          </div>
+          <div class="status-pill">
+            <span class="status-pill-icon">🤖</span>
+            Robotics &amp; Embedded Systems Engineer @ MEBOT
+          </div>
+          <div class="status-pill">
+            <span class="status-pill-icon">🎓</span>
+            Western University · Mechatronics &amp; AI Systems Eng.
+          </div>
+        </div>
         <div class="hero-cta">
-          <a href="projects.html" class="btn btn-primary">View Projects</a>
-          <a href="assets/Resumes/Sharavanan_CV_Tesla_final.pdf" class="btn btn-secondary" download>Download Resume</a>
+          <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="assets/Resumes/Sharavanan_Mathivanan_Resume.pdf" class="btn btn-secondary" download>Download Resume</a>
         </div>
       </div>
       <div class="hero-right">
@@ -47,7 +70,7 @@
           <div class="pulse-ring pulse-ring-2"></div>
           <div class="pulse-ring pulse-ring-3"></div>
           <img
-            src="assets/images/profile_bgr.jpg"
+            src="assets/images/profile.png"
             alt="Sharavanan Mathivanan"
             class="hero-photo"
             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
@@ -56,64 +79,103 @@
         </div>
       </div>
     </div>
-    <div class="hero-stats">
-      <div class="stat-item">
-        <span class="stat-number" data-target="8" data-suffix="+">8+</span>
-        <span class="stat-label">Projects</span>
-      </div>
-      <div class="stat-sep">|</div>
-      <div class="stat-item">
-        <span class="stat-number" data-target="3" data-suffix="+">3+</span>
-        <span class="stat-label">Years</span>
-      </div>
-      <div class="stat-sep">|</div>
-      <div class="stat-item">
-        <span class="stat-number" data-target="10" data-suffix="+">10+</span>
-        <span class="stat-label">Technologies</span>
-      </div>
-      <div class="stat-sep">|</div>
-      <div class="stat-item">
-        <span class="stat-number" data-target="5" data-suffix="">5</span>
-        <span class="stat-label">Roles</span>
-      </div>
-    </div>
     <div class="scroll-cue">
       <span class="scroll-cue-label">Scroll</span>
       <div class="scroll-cue-arrow"></div>
     </div>
   </section>
 
-  <section class="section skills-section">
+  <!-- ── About ─────────────────────────────────────────── -->
+  <section class="section fade-up" id="about">
     <div class="section-inner">
-      <span class="section-label">Stack</span>
-      <h2 class="section-title">Skills &amp; Tech</h2>
-      <div class="skills-grid" data-stagger>
-        <div class="skill-pill"><span class="skill-dot" style="background:#3572A5"></span>Python</div>
-        <div class="skill-pill"><span class="skill-dot" style="background:#f34b7d"></span>C/C++</div>
-        <div class="skill-pill"><span class="skill-dot" style="background:#b07219"></span>Java</div>
-        <div class="skill-pill"><span class="skill-dot" style="background:#e16737"></span>MATLAB</div>
-        <div class="skill-pill"><span class="skill-dot" style="background:#F7DF1E"></span>JavaScript</div>
-        <div class="skill-pill"><span class="skill-dot" style="background:#E34C26"></span>HTML/CSS</div>
-        <div class="skill-pill"><span class="skill-dot" style="background:#00979D"></span>Arduino</div>
-        <div class="skill-pill"><span class="skill-dot" style="background:#DA2B2B"></span>SolidWorks</div>
-        <div class="skill-pill"><span class="skill-dot" style="background:#FF6F00"></span>TensorFlow</div>
-        <div class="skill-pill"><span class="skill-dot" style="background:#00B4AB"></span>MediaPipe</div>
-        <div class="skill-pill"><span class="skill-dot" style="background:#FCC624"></span>Linux</div>
-        <div class="skill-pill"><span class="skill-dot" style="background:#555555"></span>CAD Design</div>
-        <div class="skill-pill"><span class="skill-dot" style="background:#e85d3a"></span>Computer Vision</div>
-        <div class="skill-pill"><span class="skill-dot" style="background:#2ECC71"></span>PCB Layout</div>
+      <span class="section-label">About</span>
+      <h2 class="section-title">Who I Am</h2>
+      <div class="bio-grid">
+        <p class="bio-text">I'm passionate about building intelligent machines and software, and I enjoy solving real-world problems through robotics, automation, and coding. With hands-on experience in both hardware and software, I bridge the gap between mechanical systems and intelligent solutions, from custom PCBs and CAD-designed chassis to computer vision pipelines and control loops.</p>
+        <div class="edu-card">
+          <img
+            src="https://www.uwo.ca/web_standards/2025-global/assets/img/logos/d-western-logo.svg"
+            alt="Western University"
+            class="edu-logo"
+            onerror="this.style.display='none';"
+          >
+          <div class="edu-program">Mechatronics &amp; AI Systems Engineering</div>
+          <div class="edu-degree">Bachelor of Engineering Science</div>
+          <div class="edu-detail">
+            📍 London, Canada<br>
+            📅 Expected May 2029 · 3rd Year
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section exp-section">
+  <!-- ── Skills ────────────────────────────────────────── -->
+  <section class="section skills-section" id="skills">
+    <div class="section-inner">
+      <span class="section-label">Stack</span>
+      <h2 class="section-title">Skills &amp; Tech</h2>
+      <div class="skills-groups" data-stagger>
+
+        <div class="skill-group">
+          <div class="skill-group-icon">💻</div>
+          <div class="skill-group-title">Programming &amp; Languages</div>
+          <div class="skill-group-desc">Languages I write production and research code in.</div>
+          <div class="skills-grid">
+            <div class="skill-pill"><span class="skill-dot" style="background:#3572A5"></span>Python</div>
+            <div class="skill-pill"><span class="skill-dot" style="background:#f34b7d"></span>C/C++</div>
+            <div class="skill-pill"><span class="skill-dot" style="background:#b07219"></span>Java</div>
+            <div class="skill-pill"><span class="skill-dot" style="background:#e16737"></span>MATLAB</div>
+            <div class="skill-pill"><span class="skill-dot" style="background:#F7DF1E"></span>JavaScript</div>
+            <div class="skill-pill"><span class="skill-dot" style="background:#E34C26"></span>HTML/CSS</div>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-icon">🤖</div>
+          <div class="skill-group-title">Robotics &amp; Hardware</div>
+          <div class="skill-group-desc">Mechanical design, embedded control, and PCB work.</div>
+          <div class="skills-grid">
+            <div class="skill-pill"><span class="skill-dot" style="background:#00979D"></span>Arduino</div>
+            <div class="skill-pill"><span class="skill-dot" style="background:#DA2B2B"></span>SolidWorks</div>
+            <div class="skill-pill"><span class="skill-dot" style="background:#555555"></span>CAD Design</div>
+            <div class="skill-pill"><span class="skill-dot" style="background:#2ECC71"></span>PCB Layout</div>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-icon">👁</div>
+          <div class="skill-group-title">AI &amp; Computer Vision</div>
+          <div class="skill-group-desc">Perception and learning-based systems.</div>
+          <div class="skills-grid">
+            <div class="skill-pill"><span class="skill-dot" style="background:#FF6F00"></span>TensorFlow</div>
+            <div class="skill-pill"><span class="skill-dot" style="background:#00B4AB"></span>MediaPipe</div>
+            <div class="skill-pill"><span class="skill-dot" style="background:#e85d3a"></span>Computer Vision</div>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-icon">🛠</div>
+          <div class="skill-group-title">Tools &amp; Platforms</div>
+          <div class="skill-group-desc">Where the rest of it runs and gets built.</div>
+          <div class="skills-grid">
+            <div class="skill-pill"><span class="skill-dot" style="background:#FCC624"></span>Linux</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Experience ────────────────────────────────────── -->
+  <section class="section exp-section" id="experience">
     <div class="section-inner">
       <span class="section-label">Career</span>
       <h2 class="section-title">Experience</h2>
       <div class="timeline" data-stagger>
 
         <div class="tl-item">
-          <div class="tl-date">Jun 2026 —<br>Present</div>
+          <div class="tl-date">Jun 2026 -<br>Present</div>
           <div class="tl-body">
             <div class="tl-title">Payload Lead</div>
             <div class="tl-org">Western Aero Design</div>
@@ -133,7 +195,26 @@
         </div>
 
         <div class="tl-item">
-          <div class="tl-date">Jan 2026 —<br>Jun 2026</div>
+          <div class="tl-date">May 2026 -<br>Present</div>
+          <div class="tl-body">
+            <div class="tl-title">Robotics &amp; Embedded Systems Engineer</div>
+            <div class="tl-org">MEBOT EDTECH, ROBOTICS, AI &amp; IT · Internship · Chennai, Tamil Nadu, India</div>
+            <ul class="tl-bullets">
+              <li>Designed and built an educational robot from scratch for K-12 learners, covering hardware design, firmware development, and mechanical prototyping.</li>
+              <li>Developed a visual programming IDE enabling students to program robots and sprites, supporting multiple microcontroller boards (ESP32, Raspberry Pi Pico, Arduino R4 WiFi/Minima, and more) across multiple programming languages.</li>
+              <li>Deployed both products at MEBOT, actively used by 10+ students across robotics learning programs.</li>
+            </ul>
+            <div class="tl-tags">
+              <span class="tl-tag">Embedded Systems</span>
+              <span class="tl-tag">Robotics</span>
+              <span class="tl-tag">Firmware Development</span>
+              <span class="tl-tag">ESP32</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-date">Jan 2026 -<br>Jun 2026</div>
           <div class="tl-body">
             <div class="tl-title">Junior Tricopter Lead</div>
             <div class="tl-org">Western Aero Design</div>
@@ -152,7 +233,7 @@
         </div>
 
         <div class="tl-item">
-          <div class="tl-date">Sep 2025 —<br>Jan 2026</div>
+          <div class="tl-date">Sep 2025 -<br>Jan 2026</div>
           <div class="tl-body">
             <div class="tl-title">Prototyping Engineer</div>
             <div class="tl-org">Western Aero Design</div>
@@ -172,7 +253,7 @@
         <div class="tl-item">
           <div class="tl-date">Jan 2026</div>
           <div class="tl-body">
-            <div class="tl-title">Software Lead — Ri3D</div>
+            <div class="tl-title">Software Lead, Ri3D</div>
             <div class="tl-org">WEFIRST Robotics Club</div>
             <ul class="tl-bullets">
               <li>Programmed PID control loops and motor configuration for automated mechanism actuation under 72-hour build constraint.</li>
@@ -187,9 +268,9 @@
         </div>
 
         <div class="tl-item">
-          <div class="tl-date">May 2025 —<br>Aug 2025</div>
+          <div class="tl-date">May 2025 -<br>Aug 2025</div>
           <div class="tl-body">
-            <div class="tl-title">Engineering Intern</div>
+            <div class="tl-title">Computer Vision and AI Intern</div>
             <div class="tl-org">MAANTT Global Services</div>
             <ul class="tl-bullets">
               <li>Developed Python-based monitoring system tracking 50+ concurrent inputs with 90% detection accuracy.</li>
@@ -205,7 +286,7 @@
         </div>
 
         <div class="tl-item">
-          <div class="tl-date">Mar 2024 —<br>Aug 2024</div>
+          <div class="tl-date">Mar 2024 -<br>Aug 2024</div>
           <div class="tl-body">
             <div class="tl-title">Robot Designer &amp; Trainer</div>
             <div class="tl-org">MEBOT Robotics</div>
@@ -225,103 +306,309 @@
     </div>
   </section>
 
-  <section class="section projects-section">
+  <!-- ── Education ─────────────────────────────────────── -->
+  <section class="section" id="education">
     <div class="section-inner">
-      <span class="section-label">Work</span>
-      <h2 class="section-title">Featured Projects</h2>
-      <div class="proj-grid" data-stagger>
-
-        <div class="proj-card">
-          <div class="proj-header">
-            <h3 class="proj-title">Autonomous Mobile Robot (AMR v2)</h3>
-            <span class="proj-tech">ESP32 · Custom Chassis · L298N Motor Driver</span>
-          </div>
-          <p class="proj-desc">Custom robot chassis with optimized sensor placement; integrated ultrasonic and IMU sensors. PID straight-line control and obstacle avoidance firmware.</p>
-          <div class="proj-tags">
-            <span class="proj-tag">ESP32</span>
-            <span class="proj-tag">Python</span>
-            <span class="proj-tag">PID Control</span>
-          </div>
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-header">
-            <h3 class="proj-title">Vision Mouse</h3>
-            <span class="proj-tech">MediaPipe · Python · OpenCV</span>
-          </div>
-          <p class="proj-desc">Eye-tracking powered cursor control with automatic calibration. No manual tuning required.</p>
-          <div class="proj-tags">
-            <span class="proj-tag">MediaPipe</span>
-            <span class="proj-tag">Python</span>
-            <span class="proj-tag">OpenCV</span>
-          </div>
-          <a href="https://github.com/Sharkyy-eng/vision-mouse-advanced" class="proj-link" target="_blank" rel="noopener">View on GitHub →</a>
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-header">
-            <h3 class="proj-title">Autonomous Turtle Egg Collector</h3>
-            <span class="proj-tech">Arduino · SolidWorks · Sensor Integration</span>
-          </div>
-          <p class="proj-desc">Designed mechanical-electrical interface in SolidWorks for a rugged outdoor vehicle. Integrated ultrasonic and IR line-following sensors.</p>
-          <div class="proj-tags">
-            <span class="proj-tag">Arduino</span>
-            <span class="proj-tag">SolidWorks</span>
-            <span class="proj-tag">Sensors</span>
+      <span class="section-label">Academics</span>
+      <h2 class="section-title">Education</h2>
+      <div class="timeline" data-stagger>
+        <div class="tl-item">
+          <div class="tl-date">Sep 2023 -<br>May 2029</div>
+          <div class="tl-body">
+            <div class="tl-title-row">
+              <img
+                src="https://www.uwo.ca/web_standards/2025-global/assets/img/logos/d-western-logo.svg"
+                alt="Western University"
+                class="tl-logo"
+                onerror="this.style.display='none';"
+              >
+              <div class="tl-title">Bachelor of Engineering Science</div>
+            </div>
+            <div class="tl-org">Western University, Mechatronics &amp; AI Systems Engineering</div>
+            <ul class="tl-bullets">
+              <li>3rd year, London, Ontario, Canada. Expected graduation May 2029.</li>
+            </ul>
+            <div class="tl-tags">
+              <span class="tl-tag">Robotics</span>
+              <span class="tl-tag">Controls</span>
+              <span class="tl-tag">AI Systems</span>
+            </div>
           </div>
         </div>
-
-        <div class="proj-card">
-          <div class="proj-header">
-            <h3 class="proj-title">Weather Collector</h3>
-            <span class="proj-tech">CyberPi · IoT · Sensors</span>
-          </div>
-          <p class="proj-desc">IoT weather station with real-time sensor data, cloud integration, and environmental monitoring.</p>
-          <div class="proj-tags">
-            <span class="proj-tag">CyberPi</span>
-            <span class="proj-tag">IoT</span>
-          </div>
-          <a href="https://github.com/Sharkyy-eng/weather-collector" class="proj-link" target="_blank" rel="noopener">View on GitHub →</a>
-        </div>
-
       </div>
-      <div class="proj-more">
-        <a href="projects.html" class="btn btn-outline">+ More on Projects page</a>
+
+      <div class="edu-coursework">
+        <div class="edu-coursework-title">Relevant Coursework</div>
+        <div class="skills-groups" data-stagger>
+
+          <div class="skill-group">
+            <div class="skill-group-icon">🦾</div>
+            <div class="skill-group-title">Robotics &amp; Controls</div>
+            <div class="skills-grid">
+              <div class="skill-pill">Cyber-Physical Systems Theory</div>
+              <div class="skill-pill">Intro to Mechatronic Design</div>
+              <div class="skill-pill">Engineering Dynamics</div>
+              <div class="skill-pill">Finite Element Methods in Mech. Eng.</div>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-icon">🧠</div>
+            <div class="skill-group-title">AI &amp; Data</div>
+            <div class="skills-grid">
+              <div class="skill-pill">Intro to Machine Learning</div>
+              <div class="skill-pill">Data Engineering and Machine Learning</div>
+              <div class="skill-pill">Algorithms and Data Structures</div>
+              <div class="skill-pill">Database Systems</div>
+              <div class="skill-pill">Applied Probability and Statistics</div>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-icon">⚡</div>
+            <div class="skill-group-title">Electronics &amp; Systems</div>
+            <div class="skills-grid">
+              <div class="skill-pill">Intro to Electrical Instrumentation</div>
+              <div class="skill-pill">Electric Circuits</div>
+              <div class="skill-pill">Circuits and Systems</div>
+              <div class="skill-pill">Digital Systems and Signal Processing</div>
+              <div class="skill-pill">Software Design for Systems Engineering</div>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-icon">⚙️</div>
+            <div class="skill-group-title">Core Engineering</div>
+            <div class="skills-grid">
+              <div class="skill-pill">Mechanics of Materials</div>
+              <div class="skill-pill">Computational Methods in Mechatronic Systems</div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section certs-section">
+  <!-- ── Projects ──────────────────────────────────────── -->
+  <section class="section" id="projects">
+    <div class="section-inner">
+      <span class="section-label">Work</span>
+      <h2 class="section-title">Projects</h2>
+
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="hardware">Hardware</button>
+        <button class="filter-btn" data-filter="software">Software</button>
+        <button class="filter-btn" data-filter="robotics">Robotics</button>
+        <button class="filter-btn" data-filter="in-progress">In Progress</button>
+      </div>
+
+      <div class="proj-grid-full" id="proj-grid" data-loading>
+        <p class="proj-loading">Loading projects…</p>
+      </div>
+
+      <div class="proj-toggle-wrap">
+        <button class="proj-toggle-btn" id="proj-toggle" type="button" style="display:none;">Show More ↓</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Blog ──────────────────────────────────────────── -->
+  <section class="section blog-section" id="blog" style="background: var(--surface);">
+    <div class="section-inner">
+      <span class="section-label">Writing</span>
+      <h2 class="section-title">Blog</h2>
+
+      <div class="blog-grid" data-stagger>
+        <article class="blog-card">
+          <a href="blog/robot-localization-particle-filter.html" class="blog-card-cover">
+            <img src="https://opengraph.githubassets.com/ad18365027d3752cf7866c692319e9a250ebedb7ed824764b701677bcb8bf8a0/Sharkyy-eng/robot-localization-sim" alt="Particle filter robot localization cover image" loading="lazy">
+          </a>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">Oct 2, 2025 · 5 min read</div>
+            <a href="blog/robot-localization-particle-filter.html" class="blog-card-title-link">
+              <h3 class="blog-card-title">Building a Particle Filter for Robot Localization</h3>
+            </a>
+            <p class="blog-card-desc">A code walkthrough of a 2D particle filter simulator, how noisy motion, sensor models, and resampling work together to estimate a robot's position.</p>
+            <div class="blog-card-tags">
+              <span class="proj-tag">Robotics</span>
+              <span class="proj-tag">Particle Filter</span>
+              <span class="proj-tag">Python</span>
+              <span class="proj-tag">NumPy</span>
+            </div>
+            <div class="blog-card-footer">
+              <a href="blog/robot-localization-particle-filter.html" class="blog-card-read">Read full post →</a>
+              <button class="like-btn" data-post-id="particle-filter-localization" aria-pressed="false">
+                <span class="like-btn-icon">♡</span>
+                <span class="like-btn-count">–</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-card">
+          <a href="blog/vision-mouse-advanced.html" class="blog-card-cover">
+            <img src="https://opengraph.githubassets.com/8775b9878338081e28396ecc8746fe1e78eaa9fc8b6d454c5977eb519b49a4f9/Sharkyy-eng/vision-mouse-advanced" alt="Vision Mouse Advanced cover image" loading="lazy">
+          </a>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">Sept 24, 2025 · 4 min read</div>
+            <a href="blog/vision-mouse-advanced.html" class="blog-card-title-link">
+              <h3 class="blog-card-title">Vision Mouse Advanced: Hands-Free Cursor Control with Blink Calibration</h3>
+            </a>
+            <p class="blog-card-desc">How a five-blink calibration step makes eye-tracked mouse control work reliably across different people, lighting, and camera angles.</p>
+            <div class="blog-card-tags">
+              <span class="proj-tag">Computer Vision</span>
+              <span class="proj-tag">MediaPipe</span>
+              <span class="proj-tag">Python</span>
+              <span class="proj-tag">OpenCV</span>
+            </div>
+            <div class="blog-card-footer">
+              <a href="blog/vision-mouse-advanced.html" class="blog-card-read">Read full post →</a>
+              <button class="like-btn" data-post-id="vision-mouse-advanced" aria-pressed="false">
+                <span class="like-btn-icon">♡</span>
+                <span class="like-btn-count">–</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-card">
+          <a href="blog/rtdetr-object-detection.html" class="blog-card-cover">
+            <img src="https://miro.medium.com/v2/resize:fit:612/1*9eKY4ooj_BYOQyl_ENFHHA.jpeg" alt="RT-DETR object detection cover image" loading="lazy">
+          </a>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">Aug 19, 2025 · 5 min read</div>
+            <a href="blog/rtdetr-object-detection.html" class="blog-card-title-link">
+              <h3 class="blog-card-title">Understanding Real-Time Object Detection with RT-DETR: A Code Deep Dive</h3>
+            </a>
+            <p class="blog-card-desc">A line-by-line walkthrough of the RT-DETR object detection system I built, from loading the transformer model to drawing bounding boxes on live webcam feed.</p>
+            <div class="blog-card-tags">
+              <span class="proj-tag">Computer Vision</span>
+              <span class="proj-tag">Object Detection</span>
+              <span class="proj-tag">Python</span>
+              <span class="proj-tag">Transformers</span>
+            </div>
+            <div class="blog-card-footer">
+              <a href="blog/rtdetr-object-detection.html" class="blog-card-read">Read full post →</a>
+              <button class="like-btn" data-post-id="rtdetr-code-deep-dive" aria-pressed="false">
+                <span class="like-btn-icon">♡</span>
+                <span class="like-btn-count">–</span>
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <p class="blog-empty">More write-ups on builds and experiments coming soon.</p>
+    </div>
+  </section>
+
+  <!-- ── Certifications ────────────────────────────────── -->
+  <section class="section certs-section" id="certifications">
     <div class="section-inner">
       <span class="section-label">Certifications</span>
       <div class="certs-row" data-stagger>
         <div class="cert-card">
-          <div class="cert-name">CSWA — Certified SolidWorks Associate</div>
+          <div class="cert-name">CSWA (Certified SolidWorks Associate)</div>
           <div class="cert-issuer">Dassault Systèmes</div>
           <div class="cert-year">2025</div>
+          <div class="cert-id">Credential ID C-DU87NVP5JQ</div>
         </div>
         <div class="cert-card">
           <div class="cert-name">MATLAB Onramp</div>
           <div class="cert-issuer">MathWorks</div>
           <div class="cert-year">2024</div>
+          <a href="https://matlabacademy.mathworks.com/progress/share/certificate.html?id=5d8b2151-9e57-49ca-ba32-26de4480a41c" class="cert-id cert-verify" target="_blank" rel="noopener">Verify credential →</a>
+        </div>
+        <div class="cert-card">
+          <div class="cert-name">WHMIS Training</div>
+          <div class="cert-issuer">Western University</div>
+          <div class="cert-year">2024</div>
+          <div class="cert-id">Issued Aug 23, 2024 · Expires Aug 23, 2027</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-name">Introduction to Computer Vision with TensorFlow</div>
+          <div class="cert-issuer">Google Cloud · Coursera</div>
+          <div class="cert-year">Jul 17, 2025</div>
+          <a href="https://www.coursera.org/account/accomplishments/verify/MOBQ4E7HACUA" class="cert-id cert-verify" target="_blank" rel="noopener">Verify credential →</a>
+        </div>
+        <div class="cert-card">
+          <div class="cert-name">Build a Machine Learning Image Classifier with Python</div>
+          <div class="cert-issuer">Coursera Project Network</div>
+          <div class="cert-year">Jul 24, 2025</div>
+          <a href="https://www.coursera.org/account/accomplishments/verify/6ZCF7AKKC90N" class="cert-id cert-verify" target="_blank" rel="noopener">Verify credential →</a>
+        </div>
+        <div class="cert-card">
+          <div class="cert-name">Learn to Lead Leadership Certificate</div>
+          <div class="cert-issuer">Western University</div>
+          <div class="cert-year">2025</div>
+          <div class="cert-id">Issued Dec 4, 2025</div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ── Contact ───────────────────────────────────────── -->
+  <section class="section fade-up" id="contact">
+    <div class="section-inner">
+      <span class="section-label">Contact</span>
+      <h2 class="section-title">Get in Touch</h2>
+      <div class="connect-card">
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          Open to opportunities
+        </div>
+        <h3 class="connect-title">Connect With Me</h3>
+        <p class="connect-text">Actively looking for Summer/Fall 2027 co-op opportunities in robotics, embedded systems, and applied AI. Usually reply within a day. Based in London, Ontario, Canada.</p>
+
+        <div class="connect-socials">
+          <a href="https://github.com/Sharkyy-eng" target="_blank" rel="noopener" class="connect-social-icon" aria-label="GitHub">
+            <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/sharkyca" target="_blank" rel="noopener" class="connect-social-icon" aria-label="LinkedIn">
+            <svg viewBox="0 0 16 16"><path d="M14.82 0H1.18C.53 0 0 .52 0 1.16v13.68C0 15.48.53 16 1.18 16h13.64c.65 0 1.18-.52 1.18-1.16V1.16C16 .52 15.47 0 14.82 0zM4.75 13.65H2.4V6h2.35v7.65zM3.58 4.98c-.75 0-1.36-.61-1.36-1.36 0-.75.61-1.36 1.36-1.36.75 0 1.36.61 1.36 1.36 0 .75-.6 1.36-1.36 1.36zm10.07 8.67h-2.35V9.93c0-.87-.02-1.99-1.21-1.99-1.22 0-1.4.95-1.4 1.93v3.78H6.34V6h2.26v1.05h.03c.31-.59 1.08-1.21 2.23-1.21 2.39 0 2.83 1.57 2.83 3.61v4.2z"/></svg>
+          </a>
+        </div>
+
+        <form class="connect-form" id="connect-form">
+          <input type="hidden" name="Submit" value="912de7dd-2c05-4317-a7e3-d21dc76a28b8">
+          <input type="checkbox" name="botcheck" class="connect-honeypot" tabindex="-1" autocomplete="off">
+          <input type="text" name="name" class="connect-input" placeholder="Your Name" required>
+          <input type="email" name="email" class="connect-input" placeholder="Your Email" required>
+          <textarea name="message" class="connect-input connect-textarea" rows="5" placeholder="Your Message" required></textarea>
+          <button type="submit" class="connect-submit">Send</button>
+          <p class="connect-form-note" id="connect-form-note" aria-live="polite"></p>
+        </form>
+
+        <a href="assets/Resumes/Sharavanan_Mathivanan_Resume.pdf" class="connect-resume-link" download>Download Resume →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="proj-modal-overlay" id="proj-modal-overlay" hidden>
+    <div class="proj-modal" role="dialog" aria-modal="true" aria-labelledby="proj-modal-title">
+      <button class="proj-modal-close" id="proj-modal-close" type="button" aria-label="Close">✕</button>
+      <div class="proj-modal-body" id="proj-modal-body"></div>
+    </div>
+  </div>
+
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-left">
         <div class="footer-name">Sharavanan Mathivanan</div>
-        <div class="footer-sub">London, Canada · smathiv2@uwo.ca</div>
+        <div class="footer-sub">London, Canada</div>
+        <div class="footer-visits" aria-label="Site visits">
+          <svg class="footer-eye-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3C4.5 3 1.5 5.5 0 8c1.5 2.5 4.5 5 8 5s6.5-2.5 8-5c-1.5-2.5-4.5-5-8-5zm0 8.5A3.5 3.5 0 1 1 8 4.5a3.5 3.5 0 0 1 0 7zm0-1.5A2 2 0 1 0 8 6a2 2 0 0 0 0 4z"/></svg>
+          <span id="visit-count">–</span>
+        </div>
       </div>
       <div class="footer-right">
         <a href="https://github.com/Sharkyy-eng" class="footer-link" target="_blank" rel="noopener">GitHub</a>
         <a href="https://www.linkedin.com/in/sharkyca" class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="mailto:smathiv2@uwo.ca" class="footer-link">Email</a>
       </div>
     </div>
-    <div class="footer-copy">© 2025 Sharavanan Mathivanan. All rights reserved.</div>
+    <div class="footer-copy">© 2026 Sharavanan Mathivanan. All rights reserved.</div>
   </footer>
 
   <script src="assets/js/main.js"></script>

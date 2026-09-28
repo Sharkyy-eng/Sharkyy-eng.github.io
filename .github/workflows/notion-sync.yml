@@ -1,0 +1,39 @@
+name: Sync Notion Projects
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'   # every 6 hours
+  workflow_dispatch: {}       # allows manual "Run workflow" trigger
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch projects from Notion
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATA_SOURCE_ID: ${{ secrets.NOTION_DATA_SOURCE_ID }}
+        run: node scripts/sync-notion-projects.mjs
+
+      - name: Commit changes if any
+        run: |
+          git config user.name "notion-sync-bot"
+          git config user.email "actions@users.noreply.github.com"
+          if ! git diff --quiet -- data/projects.json; then
+            git add data/projects.json
+            git commit -m "chore: sync projects from Notion"
+            git push
+          else
+            echo "No changes to commit."
+          fi
