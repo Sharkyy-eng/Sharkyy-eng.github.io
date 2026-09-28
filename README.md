@@ -1,6 +1,6 @@
 # Sharky Portfolio v2
 
-Personal portfolio of Sharavanan Mathivanan — Mechatronics & AI Systems Engineering student.
+Personal portfolio of Sharavanan Mathivanan - Mechatronics & AI Systems Engineering student.
 
 Built with plain HTML, CSS, and vanilla JS. No frameworks. Single scrolling page (`index.html`) with anchor navigation — no separate About/Projects pages anymore.
 
