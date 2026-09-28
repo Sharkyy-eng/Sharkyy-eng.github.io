@@ -75,7 +75,7 @@
 
         <p>Full code is on GitHub: <a href="https://github.com/DiamondDolby/rtdetr-object-detector" target="_blank" rel="noopener">DiamondDolby/rtdetr-object-detector</a></p>
 
-        <h3>Script 1: local_save.py — Fetching the RT-DETR Model</h3>
+        <h3>Script 1 (local_save.py): Fetching the RT-DETR Model</h3>
 
         <p>The <code>local_save.py</code> script prepares the RT-DETR model for use by downloading it from the Hugging Face Transformers library and saving it locally.</p>
 
@@ -105,7 +105,7 @@ model.save_pretrained(save_path)</code></pre>
 
         <p>This script ensures the model is ready before running detection tasks.</p>
 
-        <h3>Script 2: main.py — The Control Center</h3>
+        <h3>Script 2 (main.py): The Control Center</h3>
 
         <p>The <code>main.py</code> script is the entry point, letting users choose between webcam or image folder modes and coordinating the detection process.</p>
 
@@ -191,7 +191,7 @@ model.eval()</code></pre>
 
         <p>This is the user interface: the <code>if __name__ == "__main__":</code> block prompts the user to choose a mode via input, making the pipeline user-friendly and versatile.</p>
 
-        <h3>Script 3: utils.py — The Helper Functions</h3>
+        <h3>Script 3 (utils.py): The Helper Functions</h3>
 
         <p>The <code>utils.py</code> script contains reusable functions for loading the model and visualizing detections.</p>
 

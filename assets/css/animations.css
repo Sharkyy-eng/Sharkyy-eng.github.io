@@ -47,7 +47,7 @@
   animation: blink 0.75s step-end infinite;
 }
 
-/* Staggered children — start hidden, JS adds .visible with delays */
+/* Staggered children: start hidden, JS adds .visible with delays */
 [data-stagger] > * {
   opacity: 0;
   transform: translateY(20px);

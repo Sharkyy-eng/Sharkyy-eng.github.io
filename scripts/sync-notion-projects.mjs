@@ -2,8 +2,8 @@
 // data/projects.json in the shape the portfolio site's JS expects.
 //
 // Requires env vars:
-//   NOTION_API_KEY        — internal integration secret from notion.so/my-integrations
-//   NOTION_DATA_SOURCE_ID — data source id for the Projects database (see README)
+//   NOTION_API_KEY: internal integration secret from notion.so/my-integrations
+//   NOTION_DATA_SOURCE_ID: data source id for the Projects database (see README)
 //
 // Only rows with "Publish to Site" checked are included, so tracking-only
 // entries (drafts, meta projects, ideas) stay private to Notion.

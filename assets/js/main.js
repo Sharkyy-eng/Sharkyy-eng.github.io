@@ -120,7 +120,7 @@ window.addEventListener('scroll', () => {
   tick();
 })();
 
-// ── 6. Scroll cue — hide after scrolling past hero ────────
+// ── 6. Scroll cue: hide after scrolling past hero ────────
 const scrollCue = document.querySelector('.scroll-cue');
 if (scrollCue) {
   window.addEventListener('scroll', () => {
@@ -162,7 +162,7 @@ document.querySelectorAll('[data-stagger]').forEach(el => staggerObserver.observ
   sections.forEach(sec => spyObserver.observe(sec));
 })();
 
-// ── 9. Project grid — fetch from data/projects.json, render, animate ──
+// ── 9. Project grid: fetch from data/projects.json, render, animate ──
 // Also owns the category filter buttons and the show-more collapse,
 // since both need to agree on which .proj-card elements are visible.
 (function initProjects() {
@@ -362,8 +362,8 @@ document.querySelectorAll('[data-stagger]').forEach(el => staggerObserver.observ
   }
 })();
 
-// ── 10. Blog post like buttons — persistent count via Abacus ──
-// Uses abacus.jasoncameron.dev (free, CORS-enabled, no signup — a
+// ── 10. Blog post like buttons: persistent count via Abacus ──
+// Uses abacus.jasoncameron.dev (free, CORS-enabled, no signup, a
 // maintained CountAPI replacement) to keep a global count per post.
 // Abacus only supports anonymous increments (no public decrement), so
 // once a visitor likes a post the heart stays filled; clicking again
@@ -374,7 +374,7 @@ document.querySelectorAll('[data-stagger]').forEach(el => staggerObserver.observ
   const buttons = document.querySelectorAll('.like-btn');
   if (!buttons.length) return;
 
-  const NAMESPACE = 'jupee.mebot.in';
+  const NAMESPACE = 'sharkyy.me';
   const API = 'https://abacus.jasoncameron.dev';
   const STORAGE_KEY = 'likedPosts';
 
@@ -389,7 +389,7 @@ document.querySelectorAll('[data-stagger]').forEach(el => staggerObserver.observ
   function saveLikedSet(set) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify([...set]));
-    } catch { /* localStorage unavailable — liked state just won't persist */ }
+    } catch { /* localStorage unavailable: liked state just won't persist */ }
   }
 
   function setButtonState(btn, count, liked) {
@@ -414,7 +414,7 @@ document.querySelectorAll('[data-stagger]').forEach(el => staggerObserver.observ
 
     btn.addEventListener('click', async () => {
       const likedSet = getLikedSet();
-      if (likedSet.has(postId)) return; // already liked — no anonymous "unlike" on Abacus
+      if (likedSet.has(postId)) return; // already liked, no anonymous "unlike" on Abacus
 
       btn.disabled = true;
       try {
@@ -436,7 +436,7 @@ document.querySelectorAll('[data-stagger]').forEach(el => staggerObserver.observ
   });
 })();
 
-// ── 11. Site visit counter — eye icon in the footer ──
+// ── 11. Site visit counter: eye icon in the footer ──
 // Uses the same Abacus service as the like buttons. Increments once per
 // browser session (sessionStorage guard) so reloads and repeat page
 // views in the same visit don't inflate the count.
@@ -444,7 +444,7 @@ document.querySelectorAll('[data-stagger]').forEach(el => staggerObserver.observ
   const countEl = document.getElementById('visit-count');
   if (!countEl) return;
 
-  const NAMESPACE = 'jupee.mebot.in';
+  const NAMESPACE = 'sharkyy.me';
   const KEY = 'site-visits';
   const API = 'https://abacus.jasoncameron.dev';
   const SESSION_KEY = 'visitCounted';
@@ -467,7 +467,7 @@ document.querySelectorAll('[data-stagger]').forEach(el => staggerObserver.observ
     .catch(() => { countEl.textContent = '–'; });
 })();
 
-// ── 12. Connect card — send-a-message form via Web3Forms ──
+// ── 12. Connect card: send-a-message form via Web3Forms ──
 // Web3Forms maps an access key to a destination inbox server-side,
 // so no email address ever needs to sit in the page source.
 (function initConnectForm() {
@@ -479,7 +479,7 @@ document.querySelectorAll('[data-stagger]').forEach(el => staggerObserver.observ
     e.preventDefault();
 
     if (form.access_key.value === 'YOUR_WEB3FORMS_ACCESS_KEY') {
-      note.textContent = 'Form isn\'t connected yet — add a Web3Forms access key.';
+      note.textContent = 'Form isn\'t connected yet: add a Web3Forms access key.';
       note.className = 'connect-form-note error';
       return;
     }
