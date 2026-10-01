@@ -232,6 +232,13 @@ document.querySelectorAll('[data-stagger]').forEach(el => staggerObserver.observ
     }
   }
 
+  // Short label for cards without a photo, e.g. "Air Quality Monitor (AQM)" -> "AQM".
+  function placeholderLabel(title) {
+    const paren = title.match(/\(([^)]+)\)/);
+    if (paren) return paren[1];
+    return title.split(/\s+/).map(w => w[0]).join('').slice(0, 4).toUpperCase();
+  }
+
   function renderProjectCard(p) {
     const statusBadge = p.status === 'in-progress'
       ? `<span class="proj-status-badge">In Progress</span>`
@@ -240,8 +247,12 @@ document.querySelectorAll('[data-stagger]').forEach(el => staggerObserver.observ
     const link = p.github
       ? `<a href="${p.github}" class="proj-link" target="_blank" rel="noopener">View on GitHub →</a>`
       : '';
+    const thumb = p.image
+      ? `<img class="proj-thumb" src="${p.image}" alt="${p.title}" loading="lazy" decoding="async">`
+      : `<div class="proj-thumb proj-thumb-empty" aria-hidden="true"><span>${placeholderLabel(p.title)}</span></div>`;
     return `
-      <div class="proj-card" data-category="${(p.category || []).join(' ')}" data-id="${p.id}" role="button" tabindex="0" aria-haspopup="dialog">
+      <div class="proj-card has-thumb" data-category="${(p.category || []).join(' ')}" data-id="${p.id}" role="button" tabindex="0" aria-haspopup="dialog">
+        ${thumb}
         <div class="proj-header">
           <div class="proj-title-row">
             <h3 class="proj-title">${p.title}</h3>

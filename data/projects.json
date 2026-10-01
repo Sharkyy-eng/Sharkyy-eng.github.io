@@ -13,6 +13,19 @@
     "featured": true
   },
   {
+    "id": "aqm",
+    "title": "Air Quality Monitor (AQM)",
+    "category": ["hardware", "in-progress"],
+    "status": "in-progress",
+    "startDate": "2026-06-03",
+    "endDate": null,
+    "tech": ["Raspberry Pi Pico WH", "PMS5003", "BME280", "ST7789"],
+    "tags": ["MicroPython", "Embedded Systems", "SPI / I2C / UART"],
+    "description": "Handheld environmental monitor on a Raspberry Pi Pico WH. Tracks PM1.0/PM2.5/PM10 (PMS5003) and temperature, humidity and pressure (BME280), and alerts via display colour changes and a buzzer when user-defined comfort thresholds are crossed.",
+    "github": null,
+    "featured": true
+  },
+  {
     "id": "autonomous-robot",
     "title": "Autonomous Robot",
     "category": ["software", "robotics"],
@@ -22,6 +35,7 @@
     "tech": ["Python", "Computer Vision", "Sensor Fusion"],
     "tags": ["Python", "Computer Vision", "Sensor Fusion"],
     "description": "Self-navigating system that detects bus stops via computer vision, follows traffic signals, and avoids obstacles.",
+    "image": "assets/images/projects/autonomous-robot.webp",
     "github": null,
     "featured": false
   },
@@ -35,6 +49,7 @@
     "tech": ["Arduino", "SolidWorks", "Sensor Integration"],
     "tags": ["Arduino", "SolidWorks", "Sensors"],
     "description": "Autonomous rover for sea turtle egg conservation, built in a 3-day sprint. Designed mechanical-electrical interface in SolidWorks; integrated ultrasonic and IR line-following sensors.",
+    "image": "assets/images/projects/turtle-egg-collector.webp",
     "github": null,
     "featured": true
   },
@@ -48,6 +63,7 @@
     "tech": ["MediaPipe", "Python", "OpenCV"],
     "tags": ["MediaPipe", "Python", "OpenCV"],
     "description": "Eye-tracking powered cursor control using facial landmark detection for hands-free interaction. Automatic calibration, no manual tuning required.",
+    "image": "assets/images/projects/vision-mouse.webp",
     "github": "https://github.com/Sharkyy-eng/vision-mouse-advanced",
     "blogUrl": "blog/vision-mouse-advanced.html",
     "featured": true
@@ -62,6 +78,7 @@
     "tech": ["CyberPi", "IoT", "Sensors"],
     "tags": ["CyberPi", "IoT", "Python"],
     "description": "IoT weather station collecting temperature, humidity, and atmospheric pressure data with real-time cloud integration and environmental monitoring.",
+    "image": "assets/images/projects/weather-collector.webp",
     "github": "https://github.com/Sharkyy-eng/weather-collector",
     "featured": true
   },
@@ -75,6 +92,7 @@
     "tech": ["PyTorch", "Deep Learning", "Real-time Inference"],
     "tags": ["PyTorch", "Deep Learning", "Model Optimization"],
     "description": "Real-time detection system utilizing a Transformer-based architecture with model optimization for low-latency inference.",
+    "image": "assets/images/projects/rtdetr-object-detector.webp",
     "github": "https://github.com/Sharkyy-eng/rtdetr-object-detector",
     "blogUrl": "blog/rtdetr-object-detection.html",
     "featured": true
@@ -89,6 +107,7 @@
     "tech": ["Python", "NumPy", "Probabilistic Robotics"],
     "tags": ["Python", "NumPy", "Algorithm Design"],
     "description": "Probabilistic positioning simulator using Monte Carlo methods for robot localization in mapped environments.",
+    "image": "assets/images/projects/particle-filter-localization.webp",
     "github": "https://github.com/Sharkyy-eng/robot-localization-sim",
     "blogUrl": "blog/robot-localization-particle-filter.html",
     "featured": false
@@ -103,6 +122,7 @@
     "tech": ["SolidWorks", "Mechanical Design", "Rapid Prototyping"],
     "tags": ["SolidWorks", "Mechanical Design", "Rapid Prototyping"],
     "description": "High-precision mechanical Nerf-dart launcher designed and prototyped in under five hours. Achieved 83.7m launch distance with zero electronics.",
+    "image": "assets/images/projects/rocket-launcher.webp",
     "github": null,
     "featured": false
   },
@@ -116,6 +136,7 @@
     "tech": ["OnShape", "3D Printing", "Embedded Systems"],
     "tags": ["CAD (OnShape)", "3D Printing", "Embedded Systems"],
     "description": "Wellness device combining light therapy with auditory and visual feedback to support mental health through seasonal transitions.",
+    "image": "assets/images/projects/sad-light-diffuser.webp",
     "github": "https://github.com/Sharkyy-eng/interactive-light-therapy-tree",
     "featured": false
   },
@@ -129,6 +150,7 @@
     "tech": ["CAD", "Fluid Dynamics", "Sustainable Engineering"],
     "tags": ["CAD", "Fluid Dynamics", "Sustainable Engineering"],
     "description": "Zero-electricity water filtration prototype for power-outage prone communities. Filters harmful ions, salts, and bacteria using only gravity.",
+    "image": "assets/images/projects/gravity-water-pump.webp",
     "github": null,
     "featured": false
   },
@@ -142,58 +164,7 @@
     "tech": ["KiCAD", "PCB Design", "WS2812B LEDs"],
     "tags": ["PCB Design", "KiCAD", "WS2812B"],
     "description": "Custom PCB with LED arrays providing real-time aerial orientation assistance. Hardware-software integration for live status feedback.",
-    "github": null,
-    "featured": false
-  },
-  {
-    "id": "fin-mcmissile",
-    "title": "Fin McMissile",
-    "category": ["hardware", "robotics", "in-progress"],
-    "status": "in-progress",
-    "startDate": null,
-    "endDate": null,
-    "tech": ["Flight Controls", "3D Printing"],
-    "tags": ["Flight Controls", "3D Printing"],
-    "description": "Advanced aerial platform combining multiple flight technologies and custom manufactured components.",
-    "github": null,
-    "featured": false
-  },
-  {
-    "id": "desk-buddy",
-    "title": "Desk Buddy",
-    "category": ["hardware", "software", "robotics", "in-progress"],
-    "status": "in-progress",
-    "startDate": null,
-    "endDate": null,
-    "tech": ["OpenCV", "Behavior Trees", "Mechatronics"],
-    "tags": ["Behavior Trees", "OpenCV", "Mechatronics"],
-    "description": "Interactive desktop companion that monitors study habits using face tracking to detect fatigue and prevent academic burnout.",
-    "github": null,
-    "featured": false
-  },
-  {
-    "id": "finals-helper",
-    "title": "Finals Helper",
-    "category": ["hardware", "software", "in-progress"],
-    "status": "in-progress",
-    "startDate": null,
-    "endDate": null,
-    "tech": ["ESP32", "Arduino", "Sensor Fusion"],
-    "tags": ["Sensor Fusion", "IoT", "ESP32"],
-    "description": "Portable productivity station optimizing study environments through environmental sensing: tracks light, noise, temperature, and CO₂.",
-    "github": null,
-    "featured": false
-  },
-  {
-    "id": "ai-flappy-bird",
-    "title": "AI Flappy Bird",
-    "category": ["software", "in-progress"],
-    "status": "in-progress",
-    "startDate": null,
-    "endDate": null,
-    "tech": ["NEAT", "Neural Networks", "Game Physics"],
-    "tags": ["NEAT", "Machine Learning", "Neural Networks"],
-    "description": "Evolutionary machine learning project training neural networks through a game environment using the NEAT algorithm.",
+    "image": "assets/images/projects/drone-orientation-identifier.webp",
     "github": null,
     "featured": false
   }
