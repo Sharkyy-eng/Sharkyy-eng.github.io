@@ -1,0 +1,209 @@
+%-------------------------
+% Resume in LaTeX
+% Sharavanan Mathivanan
+% Self-contained — no external .cls needed, compiles with pdflatex/xelatex
+%------------------------
+
+\documentclass[letterpaper,9.5pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontenc}
+\input{glyphtounicode}
+
+\pagestyle{empty}
+\linespread{1.08}
+
+% ---- Margins ----
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1.19in}
+\addtolength{\topmargin}{-0.75in}
+\addtolength{\textheight}{1.75in}
+
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% ---- Section headers: small caps, bottom rule ----
+\titleformat{\section}{
+  \vspace{-7pt}\scshape\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-8pt}]
+
+% Ensure PDF is ATS-readable (maps glyphs back to text)
+\pdfgentounicode=1
+
+%-------- Custom commands --------
+\newcommand{\resumeItem}[1]{
+  \item\small{#1 \vspace{-1pt}}
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-4pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-4pt}
+}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=*,label=\textbullet,itemsep=-1pt,parsep=0pt,topsep=1pt]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-4pt}}
+
+%-------------------------------------------
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    \textbf{\Huge \scshape Sharavanan Mathivanan} \\ \vspace{3pt}
+    \small
+    \href{https://www.linkedin.com/in/sharkyca}{linkedin.com/in/sharkyca} $|$
+    \href{https://github.com/Sharkyy-eng}{github.com/Sharkyy-eng} $|$
+    \href{https://sharkyy.me}{sharkyy.me} \\ \vspace{2pt}
+    International Student with a valid Co-op Work Permit (Canada)
+\end{center}
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {University of Western Ontario}{London, ON}
+      {BESc, Mechatronics \& AI Systems Engineering}{Sept. 2024 -- Apr. 2029}
+      \resumeItemListStart
+        \resumeItem{\textbf{Coursework:} Cyber-Physical Systems Theory, Intro to Mechatronic Design, Intro to Machine Learning, Data Engineering \& Machine Learning, Algorithms \& Data Structures, Circuits and Systems, Digital Systems \& Signal Processing, Engineering Dynamics}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{Autonomous Mobile Robot (AMR v2)} $|$ \emph{ESP32, Python, PID Control}}{May 2026 -- Present}
+          \resumeItemListStart
+            \resumeItem{Custom chassis with tuned sensor placement; fuses ultrasonic and IMU data for PID straight-line control and obstacle avoidance.}
+          \resumeItemListEnd
+      \resumeProjectHeading
+          {\textbf{Autonomous Turtle Egg Collector} $|$ \emph{Arduino, SolidWorks, Sensor Integration}}{Jan 2026}
+          \resumeItemListStart
+            \resumeItem{Built a turtle egg conservation rover in a 3-day sprint; designed the SolidWorks mounts and wiring for ultrasonic and IR sensors.}
+          \resumeItemListEnd
+      \resumeProjectHeading
+          {\textbf{Vision Mouse Advanced} $|$ \emph{MediaPipe, Python, OpenCV} $|$ \href{https://github.com/Sharkyy-eng/vision-mouse-advanced}{\underline{GitHub}}}{Jul 2025 -- Aug 2025}
+          \resumeItemListStart
+            \resumeItem{Hands-free eye-tracking cursor with self-calibrating blink detection that works across users, camera angles, and lighting.}
+          \resumeItemListEnd
+      \resumeProjectHeading
+          {\textbf{RT-DETR Object Detector} $|$ \emph{PyTorch, Deep Learning} $|$ \href{https://github.com/Sharkyy-eng/rtdetr-object-detector}{\underline{GitHub}}}{Jul 2025 -- Aug 2025}
+          \resumeItemListStart
+            \resumeItem{Real-time object detection on live webcam video using a Transformer-based (RT-DETR) model, optimized for low-latency inference.}
+          \resumeItemListEnd
+    \resumeSubHeadingListEnd
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {MEBOT EdTech, Robotics, AI \& IT}{Chennai, TN}
+      {Robotics \& Embedded Systems Engineer}{May 2026 -- Present}
+      \resumeItemListStart
+        \resumeItem{Designed and built an educational robot from scratch for K-12 learners, spanning hardware, firmware, and mechanical prototyping.}
+        \resumeItem{Built a block-based IDE to program robots and sprites on ESP32, Raspberry Pi Pico, and Arduino R4 boards in multiple languages.}
+        \resumeItem{Deployed both products into active use by \textbf{10+} students across MEBOT's robotics learning programs.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {MAANTT Global Services}{Chennai, TN}
+      {Computer Vision and AI Intern}{May 2025 -- Aug 2025}
+      \resumeItemListStart
+        \resumeItem{Developed a Python-based monitoring system tracking \textbf{50+} concurrent inputs with \textbf{90\%} detection accuracy.}
+        \resumeItem{Automated reporting workflows and authored technical documentation, improving cross-team communication.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {MEBOT Robotics}{Chennai, TN}
+      {Robot Designer \& Trainer}{Mar 2024 -- Aug 2024}
+      \resumeItemListStart
+        \resumeItem{Designed and assembled functional robot prototypes from concept through commissioning.}
+        \resumeItem{Managed project timelines and created a training curriculum for students aged 8-15.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------LEADERSHIP & DESIGN TEAMS-----------
+\section{Leadership \& Design Teams}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Western Aero Design}{London, ON}
+      {Payload Lead}{Jun 2026 -- Present}
+      \resumeItemListStart
+        \resumeItem{Lead electrical design and integration of the advanced-class drone payload and its mounting mechanism for reliable deployment.}
+        \resumeItem{Coordinate with the software lead to integrate payload control into the drone's flight system.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Western Aero Design}{London, ON}
+      {Junior Tricopter Lead}{Jan 2026 -- Jun 2026}
+      \resumeItemListStart
+        \resumeItem{Led a cross-functional team of \textbf{5} to design, model, and manufacture UAV structural components to SAE competition requirements.}
+        \resumeItem{Created SolidWorks models, drawings, and BOMs; chose materials and tolerances for 3D-printed and CNC-machined parts.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Western Aero Design}{London, ON}
+      {Prototyping Engineer}{Sep 2025 -- Jan 2026}
+      \resumeItemListStart
+        \resumeItem{Designed and 3D-printed \textbf{10+} mechanical prototypes including mounting brackets, motor housings, and fixtures.}
+        \resumeItem{Engineered custom PCB layouts and wiring harnesses within one-week deadlines.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {WEFIRST Robotics Club}{London, ON}
+      {Software Lead, Ri3D}{Jan 2026}
+      \resumeItemListStart
+        \resumeItem{Led a team of \textbf{4} to build and program the robot from scratch under a \textbf{72-hour} build constraint.}
+        \resumeItem{Programmed PID control loops and motor configuration for automated mechanism actuation.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.0in, label={}]
+    \small{\item{
+     \textbf{Languages}{: Python, C/C++, Java, MATLAB, JavaScript, SQL, HTML/CSS} \\
+     \textbf{Tools}{: Linux, Git/GitHub, Docker, VS Code, IntelliJ IDEA, Claude Code} \\
+     \textbf{Hardware}{: Arduino, ESP32, PCB Layout (KiCAD), SolidWorks, CAD Design, 3D Printing} \\
+     \textbf{AI/CV}{: TensorFlow, PyTorch, MediaPipe, OpenCV, Computer Vision}
+    }}
+ \end{itemize}
+ \vspace{-16pt}
+
+%-----------CERTIFICATIONS-----------
+\section{Certifications}
+ \begin{itemize}[leftmargin=0.0in, label={}]
+    \small{\item{
+     \textbf{CSWA}, Certified SolidWorks Associate, Dassault Syst\`emes (2025) \quad\textbullet\quad
+     \textbf{MATLAB Onramp}, MathWorks (2024)
+    }}
+ \end{itemize}
+
+\end{document}
