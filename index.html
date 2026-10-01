@@ -20,6 +20,17 @@
   <meta name="twitter:image" content="https://sharkyy.me/assets/og-image.png">
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/animations.css">
+  <script>
+    /* Apply the saved or system theme before first paint (no flash). */
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('theme'); } catch (e) {}
+      if (t !== 'dark' && t !== 'light') {
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
 </head>
 <body>
 
@@ -37,7 +48,11 @@
         <a href="#contact" class="nav-link" data-section="contact">Contact</a>
       </div>
       <div class="nav-cta">
-        <a href="assets/Resumes/Sharavanan_Mathivanan_Resume.pdf" class="nav-btn nav-btn-primary" download>Resume</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Toggle dark mode">
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2 6 6M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/></svg>
+        </button>
+        <a href="assets/Resumes/Sharavanan_Mathivanan_Resume.pdf" class="nav-btn nav-btn-primary" target="_blank" rel="noopener">Resume</a>
         <a href="https://www.linkedin.com/in/sharkyca" class="nav-btn nav-btn-secondary" target="_blank" rel="noopener">LinkedIn</a>
       </div>
     </div>
@@ -73,7 +88,7 @@
         </div>
         <div class="hero-cta">
           <a href="#projects" class="btn btn-primary">View Projects</a>
-          <a href="assets/Resumes/Sharavanan_Mathivanan_Resume.pdf" class="btn btn-secondary" download>Download Resume</a>
+          <a href="assets/Resumes/Sharavanan_Mathivanan_Resume.pdf" class="btn btn-secondary" target="_blank" rel="noopener">View Resume</a>
         </div>
       </div>
       <div class="hero-right">
@@ -200,7 +215,7 @@
               <summary class="exp-summary">
                 <span class="exp-summary-text">
                   <span class="tl-title">Payload Lead</span>
-                  <span class="tl-org">Western Aero Design</span>
+                  <span class="tl-org">Western Aero Design · London, Ontario</span>
                 </span>
                 <svg class="exp-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </summary>
@@ -229,7 +244,7 @@
               <summary class="exp-summary">
                 <span class="exp-summary-text">
                   <span class="tl-title">Robotics &amp; Embedded Systems Engineer</span>
-                  <span class="tl-org">MEBOT EDTECH, ROBOTICS, AI &amp; IT · Internship · Chennai, Tamil Nadu, India</span>
+                  <span class="tl-org">MEBOT EDTECH, ROBOTICS, AI &amp; IT · Internship · Chennai, India</span>
                 </span>
                 <svg class="exp-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </summary>
@@ -257,7 +272,7 @@
               <summary class="exp-summary">
                 <span class="exp-summary-text">
                   <span class="tl-title">Junior Tricopter Lead</span>
-                  <span class="tl-org">Western Aero Design</span>
+                  <span class="tl-org">Western Aero Design · London, Ontario</span>
                 </span>
                 <svg class="exp-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </summary>
@@ -285,7 +300,7 @@
               <summary class="exp-summary">
                 <span class="exp-summary-text">
                   <span class="tl-title">Prototyping Engineer</span>
-                  <span class="tl-org">Western Aero Design</span>
+                  <span class="tl-org">Western Aero Design · London, Ontario</span>
                 </span>
                 <svg class="exp-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </summary>
@@ -312,7 +327,7 @@
               <summary class="exp-summary">
                 <span class="exp-summary-text">
                   <span class="tl-title">Software Lead, Ri3D</span>
-                  <span class="tl-org">WEFIRST Robotics Club</span>
+                  <span class="tl-org">WEFIRST Robotics Club · London, Ontario</span>
                 </span>
                 <svg class="exp-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </summary>
@@ -338,7 +353,7 @@
               <summary class="exp-summary">
                 <span class="exp-summary-text">
                   <span class="tl-title">Computer Vision and AI Intern</span>
-                  <span class="tl-org">MAANTT Global Services</span>
+                  <span class="tl-org">MAANTT Global Services · Chennai, India</span>
                 </span>
                 <svg class="exp-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </summary>
@@ -359,13 +374,44 @@
         </div>
 
         <div class="tl-item">
+          <div class="tl-date">Dec 2024 -<br>May 2025</div>
+          <div class="tl-body">
+            <details class="exp-card">
+              <summary class="exp-summary">
+                <span class="exp-summary-text">
+                  <span class="tl-title">Autonomous Systems Software Developer</span>
+                  <span class="tl-org">WE AutoPilot Club · Seasonal · London, Ontario (Hybrid)</span>
+                </span>
+                <svg class="exp-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </summary>
+              <div class="exp-details">
+            <ul class="tl-bullets">
+              <li>Developed custom developer tools for seamless integration with the F1TENTH Gym environment, enhancing autonomous vehicle testing.</li>
+              <li>Created utility functions to efficiently extract and manipulate CSV waypoint data, streamlining path planning tasks.</li>
+              <li>Contributed to the design and implementation of perception models for real-time object detection and scene understanding.</li>
+              <li>Collaborated with a multidisciplinary team to advance the autonomous driving stack for Western AutoPilot's race vehicle.</li>
+            </ul>
+            <div class="tl-tags">
+              <span class="tl-tag">Python</span>
+              <span class="tl-tag">F1TENTH Gym</span>
+              <span class="tl-tag">Path Planning</span>
+              <span class="tl-tag">Computer Vision</span>
+              <span class="tl-tag">Autonomous Vehicles</span>
+            </div>
+            </div>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="tl-item">
           <div class="tl-date">Mar 2024 -<br>Aug 2024</div>
           <div class="tl-body">
             <details class="exp-card">
               <summary class="exp-summary">
                 <span class="exp-summary-text">
                   <span class="tl-title">Robot Designer &amp; Trainer</span>
-                  <span class="tl-org">MEBOT Robotics</span>
+                  <span class="tl-org">MEBOT Robotics · Chennai, India</span>
                 </span>
                 <svg class="exp-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </summary>
@@ -613,7 +659,7 @@
           <p class="connect-form-note" id="connect-form-note" aria-live="polite"></p>
         </form>
 
-        <a href="assets/Resumes/Sharavanan_Mathivanan_Resume.pdf" class="connect-resume-link" download>Download Resume →</a>
+        <a href="assets/Resumes/Sharavanan_Mathivanan_Resume.pdf" class="connect-resume-link" target="_blank" rel="noopener">View Resume →</a>
       </div>
     </div>
   </section>
