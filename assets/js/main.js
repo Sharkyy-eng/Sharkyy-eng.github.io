@@ -524,3 +524,44 @@ document.querySelectorAll('[data-stagger]').forEach(el => staggerObserver.observ
     }
   });
 })();
+
+// ── 13. Light / dark theme toggle ──
+// <head> already applied the saved (or system) theme before paint;
+// this wires the nav button and follows system changes until the
+// visitor picks a theme themselves.
+(function initThemeToggle() {
+  const root = document.documentElement;
+  const btn = document.getElementById('theme-toggle');
+
+  function label(theme) {
+    if (!btn) return;
+    const next = theme === 'dark' ? 'light' : 'dark';
+    btn.setAttribute('aria-label', `Switch to ${next} mode`);
+    btn.setAttribute('title', `Switch to ${next} mode`);
+  }
+
+  function apply(theme, save) {
+    root.setAttribute('data-theme', theme);
+    label(theme);
+    if (save) {
+      try { localStorage.setItem('theme', theme); } catch { /* ignore */ }
+    }
+  }
+
+  label(root.getAttribute('data-theme') || 'light');
+
+  if (btn) {
+    btn.addEventListener('click', () => {
+      apply(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);
+    });
+  }
+
+  const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  if (mq && mq.addEventListener) {
+    mq.addEventListener('change', (e) => {
+      let saved = null;
+      try { saved = localStorage.getItem('theme'); } catch { /* ignore */ }
+      if (!saved) apply(e.matches ? 'dark' : 'light', false);
+    });
+  }
+})();
